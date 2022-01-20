@@ -10,7 +10,7 @@ import {
   Output,
   SimpleChanges,
   TemplateRef,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { TreeService } from './tree.service';
 import * as TreeTypes from './tree.types';
@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs/Subscription';
 @Component({
   selector: 'tree',
   template: `<tree-internal #rootComponent [tree]="tree" [settings]="settings" [template]="template"></tree-internal>`,
-  providers: [TreeService]
+  providers: [TreeService],
 })
 export class TreeComponent implements OnInit, OnChanges, OnDestroy {
   private static EMPTY_TREE: Tree = new Tree({ value: '' });
@@ -160,6 +160,6 @@ export class TreeComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub && sub.unsubscribe());
+    this.subscriptions.forEach((sub) => sub && sub.unsubscribe());
   }
 }

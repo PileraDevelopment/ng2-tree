@@ -8,14 +8,17 @@ import { isEscapePressed, isLeftButtonClicked } from '../utils/event.utils';
   template: `
     <div class="node-menu">
       <ul class="node-menu-content" #menuContainer>
-        <li class="node-menu-item" *ngFor="let menuItem of availableMenuItems"
-          (click)="onMenuItemSelected($event, menuItem)">
-          <div class="node-menu-item-icon {{menuItem.cssClass}}"></div>
-          <span class="node-menu-item-value">{{menuItem.name}}</span>
+        <li
+          class="node-menu-item"
+          *ngFor="let menuItem of availableMenuItems"
+          (click)="onMenuItemSelected($event, menuItem)"
+        >
+          <div class="node-menu-item-icon {{ menuItem.cssClass }}"></div>
+          <span class="node-menu-item-value">{{ menuItem.name }}</span>
         </li>
       </ul>
     </div>
-  `
+  `,
 })
 export class NodeMenuComponent implements OnInit, OnDestroy {
   @Output()
@@ -29,23 +32,23 @@ export class NodeMenuComponent implements OnInit, OnDestroy {
     {
       name: 'New tag',
       action: NodeMenuItemAction.NewTag,
-      cssClass: 'new-tag'
+      cssClass: 'new-tag',
     },
     {
       name: 'New folder',
       action: NodeMenuItemAction.NewFolder,
-      cssClass: 'new-folder'
+      cssClass: 'new-folder',
     },
     {
       name: 'Rename',
       action: NodeMenuItemAction.Rename,
-      cssClass: 'rename'
+      cssClass: 'rename',
     },
     {
       name: 'Remove',
       action: NodeMenuItemAction.Remove,
-      cssClass: 'remove'
-    }
+      cssClass: 'remove',
+    },
   ];
 
   private disposersForGlobalListeners: Function[] = [];
@@ -69,7 +72,7 @@ export class NodeMenuComponent implements OnInit, OnDestroy {
     if (isLeftButtonClicked(e)) {
       this.menuItemSelected.emit({
         nodeMenuItemAction: selectedMenuItem.action,
-        nodeMenuItemSelected: selectedMenuItem.name
+        nodeMenuItemSelected: selectedMenuItem.name,
       });
 
       this.nodeMenuService.fireMenuEvent(e.target as HTMLElement, NodeMenuAction.Close);

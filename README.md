@@ -6,43 +6,43 @@
 
 <!-- TOC -->
 
-* [:clapper: Usage](#clapper-usage)
-* [:eyes: Demo](#eyes-demo)
-* [:wrench: API](#wrench-api)
-  * [tree](#tree)
-  * [[tree]](#tree)
-    * [Load children asynchronously](#load-children-asynchronously)
-    * [Load children using ngrx (or any redux-like library)](#load-children-using-ngrx-or-any-redux-like-library)
-    * [Configure node via TreeModelSettings](#configure-node-via-treemodelsettings)
-  * [[settings]](#settings)
-  * [`Tree` class](#tree-class)
-  * [events (nodeMoved, nodeSelected, nodeRenamed, nodeRemoved, nodeCreated, nodeExpanded, nodeCollapsed)](#events-nodemoved-nodeselected-noderenamed-noderemoved-nodecreated-nodeexpanded-nodecollapsed)
-    * [NodeSelectedEvent](#nodeselectedevent)
-    * [NodeMovedEvent](#nodemovedevent)
-    * [NodeRemovedEvent](#noderemovedevent)
-    * [NodeCreatedEvent](#nodecreatedevent)
-    * [NodeRenamedEvent](#noderenamedevent)
-    * [NodeExpandedEvent](#nodeexpandedevent)
-    * [NodeCollapsedEvent](#nodecollapsedevent)
-    * [LoadNextLevelEvent](#loadnextlevelevent)
-* [:gun: Controller](#gun-controller)
-  * [select - selects a node](#select---selects-a-node)
-  * [isSelected - checks whether a node is selected](#isselected---checks-whether-a-node-is-selected)
-  * [collapse - collapses a node](#collapse---collapses-a-node)
-  * [isCollapsed - check whether a node is collapsed](#iscollapsed---check-whether-a-node-is-collapsed)
-  * [expand - expands a node](#expand---expands-a-node)
-  * [isExpanded - checks whether a node is expanded](#isexpanded---checks-whether-a-node-is-expanded)
-  * [toTreeModel - converts a tree to a TreeModel instance](#totreemodel---converts-a-tree-to-a-treemodel-instance)
-  * [rename - renames a node (changes its value underneath)](#rename---renames-a-node-changes-its-value-underneath)
-  * [startRenaming - changes the node template so that text input appears and lets a user type a new name](#startrenaming---changes-the-node-template-so-that-text-input-appears-and-lets-a-user-type-a-new-name)
-  * [remove - removes a node from the tree](#remove---removes-a-node-from-the-tree)
-  * [addChild - creates a new child node](#addchild---creates-a-new-child-node)
-  * [changeNodeId - changes node's id](#changenodeid---changes-nodes-id)
-  * [reloadChildren - loads async children once more](#reloadchildren---loads-async-children-once-more)
-  * [setChildren - changes children of a node;](#setchildren---changes-children-of-a-node)
-* [SystemJS](#systemjs)
-* [Changes that should be taken into account in order to migrate from **ng2-tree V1** to **ng2-tree V2**](#changes-that-should-be-taken-into-account-in-order-to-migrate-from-__ng2-tree-v1__-to-__ng2-tree-v2__)
-* [:bulb: Want to help?](#bulb-want-to-help)
+- [:clapper: Usage](#clapper-usage)
+- [:eyes: Demo](#eyes-demo)
+- [:wrench: API](#wrench-api)
+  - [tree](#tree)
+  - [[tree]](#tree)
+    - [Load children asynchronously](#load-children-asynchronously)
+    - [Load children using ngrx (or any redux-like library)](#load-children-using-ngrx-or-any-redux-like-library)
+    - [Configure node via TreeModelSettings](#configure-node-via-treemodelsettings)
+  - [[settings]](#settings)
+  - [`Tree` class](#tree-class)
+  - [events (nodeMoved, nodeSelected, nodeRenamed, nodeRemoved, nodeCreated, nodeExpanded, nodeCollapsed)](#events-nodemoved-nodeselected-noderenamed-noderemoved-nodecreated-nodeexpanded-nodecollapsed)
+    - [NodeSelectedEvent](#nodeselectedevent)
+    - [NodeMovedEvent](#nodemovedevent)
+    - [NodeRemovedEvent](#noderemovedevent)
+    - [NodeCreatedEvent](#nodecreatedevent)
+    - [NodeRenamedEvent](#noderenamedevent)
+    - [NodeExpandedEvent](#nodeexpandedevent)
+    - [NodeCollapsedEvent](#nodecollapsedevent)
+    - [LoadNextLevelEvent](#loadnextlevelevent)
+- [:gun: Controller](#gun-controller)
+  - [select - selects a node](#select---selects-a-node)
+  - [isSelected - checks whether a node is selected](#isselected---checks-whether-a-node-is-selected)
+  - [collapse - collapses a node](#collapse---collapses-a-node)
+  - [isCollapsed - check whether a node is collapsed](#iscollapsed---check-whether-a-node-is-collapsed)
+  - [expand - expands a node](#expand---expands-a-node)
+  - [isExpanded - checks whether a node is expanded](#isexpanded---checks-whether-a-node-is-expanded)
+  - [toTreeModel - converts a tree to a TreeModel instance](#totreemodel---converts-a-tree-to-a-treemodel-instance)
+  - [rename - renames a node (changes its value underneath)](#rename---renames-a-node-changes-its-value-underneath)
+  - [startRenaming - changes the node template so that text input appears and lets a user type a new name](#startrenaming---changes-the-node-template-so-that-text-input-appears-and-lets-a-user-type-a-new-name)
+  - [remove - removes a node from the tree](#remove---removes-a-node-from-the-tree)
+  - [addChild - creates a new child node](#addchild---creates-a-new-child-node)
+  - [changeNodeId - changes node's id](#changenodeid---changes-nodes-id)
+  - [reloadChildren - loads async children once more](#reloadchildren---loads-async-children-once-more)
+  - [setChildren - changes children of a node;](#setchildren---changes-children-of-a-node)
+- [SystemJS](#systemjs)
+- [Changes that should be taken into account in order to migrate from **ng2-tree V1** to **ng2-tree V2**](#changes-that-should-be-taken-into-account-in-order-to-migrate-from-__ng2-tree-v1__-to-__ng2-tree-v2__)
+- [:bulb: Want to help?](#bulb-want-to-help)
 
 <!-- /TOC -->
 
@@ -65,7 +65,7 @@ import { TreeModule } from 'ng2-tree';
 @NgModule({
   declarations: [MyComponent],
   imports: [BrowserModule, TreeModule],
-  bootstrap: [MyComponent]
+  bootstrap: [MyComponent],
 })
 export class MyModule {}
 ```
@@ -79,7 +79,7 @@ import { TreeModel } from 'ng2-tree';
 @Component({
   selector: 'myComp',
   // 2 - set [tree] attribute to tree object
-  template: `<tree [tree]="tree"></tree>`
+  template: `<tree [tree]="tree"></tree>`,
 })
 class MyComponent {
   // 3 - make sure that tree object conforms to the TreeModel interface
@@ -88,13 +88,13 @@ class MyComponent {
     children: [
       {
         value: 'Object-oriented programming',
-        children: [{ value: 'Java' }, { value: 'C++' }, { value: 'C#' }]
+        children: [{ value: 'Java' }, { value: 'C++' }, { value: 'C#' }],
       },
       {
         value: 'Prototype-based programming',
-        children: [{ value: 'JavaScript' }, { value: 'CoffeeScript' }, { value: 'Lua' }]
-      }
-    ]
+        children: [{ value: 'JavaScript' }, { value: 'CoffeeScript' }, { value: 'Lua' }],
+      },
+    ],
   };
 }
 ```
@@ -143,18 +143,19 @@ Also, there is [another demo built with Angular CLI](https://github.com/rychkog/
 Here is the fully stuffed _tree_ tag that you can use in your templates:
 
 ```html
-    <tree
-      [tree]="tree"
-      [settings]="settings"
-      (nodeRemoved)="handleRemoved($event)"
-      (nodeRenamed)="handleRenamed($event)"
-      (nodeSelected)="handleSelected($event)"
-      (nodeMoved)="handleMoved($event)"
-      (nodeCreated)="handleCreated($event)"
-      (nodeExpanded)="handleExpanded($event)"
-      (nodeCollapsed)="handleCollapsed($event)"
-      (loadNextLevel)="handleNextLevel($event)">
-    </tree>
+<tree
+  [tree]="tree"
+  [settings]="settings"
+  (nodeRemoved)="handleRemoved($event)"
+  (nodeRenamed)="handleRenamed($event)"
+  (nodeSelected)="handleSelected($event)"
+  (nodeMoved)="handleMoved($event)"
+  (nodeCreated)="handleCreated($event)"
+  (nodeExpanded)="handleExpanded($event)"
+  (nodeCollapsed)="handleCollapsed($event)"
+  (loadNextLevel)="handleNextLevel($event)"
+>
+</tree>
 ```
 
 Let's go through every element of this structure one by one.
@@ -345,20 +346,20 @@ Here is an example of its usage:
 }
 ```
 
-* `static` - Boolean - This option makes it impossible to drag a tree or modify it in a some way, though you still can select nodes in the static tree and appropriate events will be generated.
-* `isCollapsedOnInit` - Boolean - This option makes a tree to be collapsed on first load (this option cascades to its children).
-* `rightMenu` - Boolean - This option allows you to activate (true, by default) or deactivate (false) right menu when clicking with right button of a mouse.
-* `leftMenu` - Boolean - This option allows you to activate (true) or deactivate (false, by default) left menu.
-* `cssClasses` - Object:
-  * `expanded` - String - It specifies a css class (or classes) for an item which represents expanded state of a node. The item is clickable and it transitions the node to the collapsed state
-  * `collapsed` - String - It specifies a css class (or classes) for an item which represents collapsed state of a node. The item is clickable and it transitions the node to the expanded state
-  * `leaf` - String - It specifies a css class (or classes) for an item which represents a node without an option to expand or collapse - in other words: a leaf node.
-  * `empty` - String - Node is considered empty when it has no children. Once this condition is satisfied - appropriate css class will be applied to the node.
-* `templates` - Object:
-  * `node` - String - It specifies a html template which will be included to the left of the node's value.
-  * `leaf` - String - It specifies a html template which will be included to the left of the leaf's value.
-  * `leftMenu` - String - It specifies a html template to the right of the node's value. This template becomes clickable and shows a menu on node's click.
-* `menuItems` - here you can specify your custom menu items. You should feed an array of NodeMenuItem instances to this setting. Once done - setup a subscription to `MenuItemSelectedEvent`s by listening to `(menuItemSelected)="onMenuItemSelected($event)"` on the tree.
+- `static` - Boolean - This option makes it impossible to drag a tree or modify it in a some way, though you still can select nodes in the static tree and appropriate events will be generated.
+- `isCollapsedOnInit` - Boolean - This option makes a tree to be collapsed on first load (this option cascades to its children).
+- `rightMenu` - Boolean - This option allows you to activate (true, by default) or deactivate (false) right menu when clicking with right button of a mouse.
+- `leftMenu` - Boolean - This option allows you to activate (true) or deactivate (false, by default) left menu.
+- `cssClasses` - Object:
+  - `expanded` - String - It specifies a css class (or classes) for an item which represents expanded state of a node. The item is clickable and it transitions the node to the collapsed state
+  - `collapsed` - String - It specifies a css class (or classes) for an item which represents collapsed state of a node. The item is clickable and it transitions the node to the expanded state
+  - `leaf` - String - It specifies a css class (or classes) for an item which represents a node without an option to expand or collapse - in other words: a leaf node.
+  - `empty` - String - Node is considered empty when it has no children. Once this condition is satisfied - appropriate css class will be applied to the node.
+- `templates` - Object:
+  - `node` - String - It specifies a html template which will be included to the left of the node's value.
+  - `leaf` - String - It specifies a html template which will be included to the left of the leaf's value.
+  - `leftMenu` - String - It specifies a html template to the right of the node's value. This template becomes clickable and shows a menu on node's click.
+- `menuItems` - here you can specify your custom menu items. You should feed an array of NodeMenuItem instances to this setting. Once done - setup a subscription to `MenuItemSelectedEvent`s by listening to `(menuItemSelected)="onMenuItemSelected($event)"` on the tree.
 
 All options that are defined on a `parent` are automatically applied to children. If you want you can override them by `settings` of the child node.
 
@@ -368,7 +369,7 @@ Object that should be passed to `[settings]` must be of type [`Ng2TreeSettings`]
 
 ```typescript
 const treeSettings: Ng2TreeSettings = {
-  rootIsVisible: false
+  rootIsVisible: false,
 };
 ```
 
@@ -389,10 +390,7 @@ Also in the next section, you'll be reading about events generated by the `ng2-t
 You can subscribe to the `NodeSelectedEvent` by attaching listener to the `(nodeSelected)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeSelected)="handleSelected($event)">
-    </tree>
+<tree [tree]="tree" (nodeSelected)="handleSelected($event)"> </tree>
 ```
 
 `NodeSelectedEvent` has just one property `node` which contains a `Tree` object representing selected node.
@@ -406,16 +404,13 @@ You can subscribe to the `NodeSelectedEvent` by attaching listener to the `(node
 You can subscribe to `NodeMovedEvent` by attaching listener to `(nodeMoved)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeMoved)="handleMoved($event)">
-    </tree>
+<tree [tree]="tree" (nodeMoved)="handleMoved($event)"> </tree>
 ```
 
 `NodeMovedEvent` has two properties `node` and `previousParent` both of which contain `Tree` objects:
 
-* `node` contains a moved node;
-* `previousParent` contains a previous parent of the moved node;
+- `node` contains a moved node;
+- `previousParent` contains a previous parent of the moved node;
 
 ```typescript
 {node: <Tree>{...}, previousParent: <Tree>{...}}
@@ -426,10 +421,7 @@ You can subscribe to `NodeMovedEvent` by attaching listener to `(nodeMoved)` att
 You can subscribe to `NodeRemovedEvent` by attaching listener to `(nodeRemoved)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeRemoved)="handleRemoved($event)">
-    </tree>
+<tree [tree]="tree" (nodeRemoved)="handleRemoved($event)"> </tree>
 ```
 
 `NodeRemovedEvent` has a `node` property, which contains removed node (of type `Tree`).
@@ -443,10 +435,7 @@ You can subscribe to `NodeRemovedEvent` by attaching listener to `(nodeRemoved)`
 You can subscribe to `NodeCreatedEvent` by attaching listener to `(nodeCreated)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeCreated)="handleCreated($event)">
-    </tree>
+<tree [tree]="tree" (nodeCreated)="handleCreated($event)"> </tree>
 ```
 
 `NodeCreatedEvent` has a `node` property of type `Tree`, which contains a created node and a `controller` property, which will give you access to node's controller.
@@ -460,17 +449,14 @@ You can subscribe to `NodeCreatedEvent` by attaching listener to `(nodeCreated)`
 You can subscribe to `NodeRenamedEvent` by attaching listener to `(nodeRenamed)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeRenamed)="handleRenamed($event)">
-    </tree>
+<tree [tree]="tree" (nodeRenamed)="handleRenamed($event)"> </tree>
 ```
 
 `NodeRenamedEvent` has three properties:
 
-* `node` contains a node that was renamed ( an instance of `Tree`).
-* `oldValue` contains a value, that node used to have (it might be `string` or `RenamableNode`)
-* `newValue` contains a new value of the node (it might be `string` or `RenamableNode`)
+- `node` contains a node that was renamed ( an instance of `Tree`).
+- `oldValue` contains a value, that node used to have (it might be `string` or `RenamableNode`)
+- `newValue` contains a new value of the node (it might be `string` or `RenamableNode`)
 
 ```typescript
 {
@@ -485,10 +471,7 @@ You can subscribe to `NodeRenamedEvent` by attaching listener to `(nodeRenamed)`
 You can subscribe to `NodeExpandedEvent` by attaching listener to `(nodeExpanded)` attribute, this event wont fire on initial expansion
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeExpanded)="handleExpanded($event)">
-    </tree>
+<tree [tree]="tree" (nodeExpanded)="handleExpanded($event)"> </tree>
 ```
 
 `NodeExpandedEvent` has a `node` property of type `Tree`, which contains an expanded node.
@@ -502,10 +485,7 @@ You can subscribe to `NodeExpandedEvent` by attaching listener to `(nodeExpanded
 You can subscribe to `NodeCollapsedEvent` by attaching listener to `(nodeCollapsed)` attribute
 
 ```html
-    <tree
-      [tree]="tree"
-      (nodeCollapsed)="handleCollapsed($event)">
-    </tree>
+<tree [tree]="tree" (nodeCollapsed)="handleCollapsed($event)"> </tree>
 ```
 
 `NodeCollapsedEvent` has a `node` property of type `Tree`, which contains a collapsed node.
@@ -520,10 +500,7 @@ You can subscribe to `LoadNextLevelEvent` by attaching a listener to `(loadNextL
 Relevant for loading children via ngrx (or any redux-inspired library).
 
 ```html
-    <tree
-      [tree]="tree"
-      (loadNextLevel)="handleNextLevel($event)">
-    </tree>
+<tree [tree]="tree" (loadNextLevel)="handleNextLevel($event)"> </tree>
 ```
 
 `LoadNextLevelEvent` has a `node` property of the type `Tree`, which contains a node for which next level (its children) should be loaded.
@@ -600,7 +577,7 @@ class TheComponent implements AfterViewInit {
     ]
   };
 
-  @ViewChild('treeComponent') treeComponent;
+  @ViewChild('treeComponent', {static: false}) treeComponent;
 
   ngAfterViewInit(): void {
     // ... make use of this.treeComponent ...
@@ -711,7 +688,7 @@ This method removes the node and its children and fires remove event.
 ```typescript
 let newNode: TreeModel = {
   value: 'Go',
-  children: []
+  children: [],
 };
 oopNodeController.addChild(newNode);
 ```
@@ -738,7 +715,7 @@ oopNodeController.reloadChildren();
 let newChildren: Array<TreeModel> = [
   { value: 'new children 1' },
   { value: 'new children 2' },
-  { value: 'new children 3' }
+  { value: 'new children 3' },
 ];
 oopNodeController.setChildren(newChildren);
 ```
@@ -763,11 +740,11 @@ System.config({
 
 ## Changes that should be taken into account in order to migrate from **ng2-tree V1** to **ng2-tree V2**
 
-* Events were reworked:
-  * In V1 all events that were inherited from NodeDestructiveEvent used to have property `parent`. It's not the case anymore. If you need a parent you should get it from `node` in event object like `node.parent`;
-  * All events used to have `node` property of type `TreeModel`. Now `node` is of type [Tree](#tree-class) (as well as `node.parent`);
-  * `NodeMovedEvent` now has property `previousParent`, which contains tree in which moved node used to be.
-* CSS styles in **ng2-tree V2** are distributed as separate file which you can find in `node_modules/ng2-tree/styles.css`. That allows you to override ng2-tree styles more easily.
+- Events were reworked:
+  - In V1 all events that were inherited from NodeDestructiveEvent used to have property `parent`. It's not the case anymore. If you need a parent you should get it from `node` in event object like `node.parent`;
+  - All events used to have `node` property of type `TreeModel`. Now `node` is of type [Tree](#tree-class) (as well as `node.parent`);
+  - `NodeMovedEvent` now has property `previousParent`, which contains tree in which moved node used to be.
+- CSS styles in **ng2-tree V2** are distributed as separate file which you can find in `node_modules/ng2-tree/styles.css`. That allows you to override ng2-tree styles more easily.
 
 ## :bulb: Want to help?
 

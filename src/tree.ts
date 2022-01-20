@@ -12,7 +12,7 @@ import {
 } from './tree.types';
 import { NodeMenuItem } from './menu/node-menu.component';
 
-import * as uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 
 enum ChildrenLoadingState {
   NotStarted,
@@ -361,7 +361,9 @@ export class Tree {
    * @returns {boolean} A flag indicating whether or not this tree has a left menu.
    */
   public hasLeftMenu(): boolean {
-    return !get(this.node.settings, 'static', false) && get(this.node.settings, 'leftMenu', false);
+    // return !get(this.node.settings, 'static', false) && get(this.node.settings, 'leftMenu', false);
+    // FORKED we want a menu even if static.. esp so no drag
+    return get(this.node.settings, 'leftMenu', false);
   }
 
   /**
@@ -393,7 +395,9 @@ export class Tree {
    * @returns {boolean} A flag indicating whether or not this tree has a custom menu.
    */
   public hasCustomMenu(): boolean {
-    return !this.isStatic() && !!get(this.node.settings, 'menuItems', false);
+    // return !this.isStatic() && !!get(this.node.settings, 'menuItems', false);
+    // FORKED we want a menu even if static.. esp so no drag
+    return !!get(this.node.settings, 'menuItems', false);
   }
   /**
    * Check whether this tree is "Branch" or not. "Branch" is a node that has children.

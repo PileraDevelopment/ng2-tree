@@ -36,20 +36,21 @@ const treeLord: TreeModel = {
       id: 2,
       loadChildren(onLoaded) {
         onLoaded([{ value: 'Newborn#1' }, { value: 'Newborn#2' }]);
-      }
+      },
     },
     {
       value: 'Disciple#2',
       id: 3,
-      children: [{ value: 'SubDisciple#1', id: 4 }, { value: 'SubDisciple#2', id: 5 }]
-    }
-  ]
+      children: [
+        { value: 'SubDisciple#1', id: 4 },
+        { value: 'SubDisciple#2', id: 5 },
+      ],
+    },
+  ],
 };
 
 @Component({
-  template: `
-  <div><tree id="lord" #lordTreeComponent [tree]="treeLord" [settings]="settings"></tree></div>
-`
+  template: ` <div><tree id="lord" #lordTreeComponent [tree]="treeLord" [settings]="settings"></tree></div> `,
 })
 class TestComponent {
   public settings = new Ng2TreeSettings();
@@ -73,9 +74,9 @@ describe('TreeController', () => {
         NodeEditableDirective,
         NodeMenuComponent,
         NodeDraggableDirective,
-        SafeHtmlPipe
+        SafeHtmlPipe,
       ],
-      providers: [NodeMenuService, NodeDraggableService, TreeService, SafeHtmlPipe]
+      providers: [NodeMenuService, NodeDraggableService, TreeService, SafeHtmlPipe],
     });
 
     fixture = TestBed.createComponent(TestComponent);
@@ -157,7 +158,7 @@ describe('TreeController', () => {
     const checkChildChecked = (children: Tree[], checked: boolean) =>
       isEmpty(children)
         ? checked
-        : children.every(child => child.checked && checkChildChecked(child.children, child.checked));
+        : children.every((child) => child.checked && checkChildChecked(child.children, child.checked));
 
     expect(checkChildChecked(tree.children, tree.checked)).toBe(true, 'All the children should be checked');
   });
@@ -175,26 +176,23 @@ describe('TreeController', () => {
     const checkChildChecked = (children: Tree[], checked: boolean) =>
       isEmpty(children)
         ? checked
-        : children.every(child => child.checked && checkChildChecked(child.children, child.checked));
+        : children.every((child) => child.checked && checkChildChecked(child.children, child.checked));
 
     expect(checkChildChecked(tree.children, tree.checked)).toBe(false, 'All the children should be unchecked');
   });
 
-  it(
-    'detects indetermined node',
-    fakeAsync(() => {
-      const tree = lordInternalTreeInstance.tree;
-      const controller = treeService.getController(tree.id);
-      const childController = treeService.getController(tree.children[0].id);
+  it('detects indetermined node', fakeAsync(() => {
+    const tree = lordInternalTreeInstance.tree;
+    const controller = treeService.getController(tree.id);
+    const childController = treeService.getController(tree.children[0].id);
 
-      childController.check();
-      fixture.detectChanges();
-      tick();
+    childController.check();
+    fixture.detectChanges();
+    tick();
 
-      expect(childController.isChecked()).toBe(true, 'Node should be checked');
-      expect(controller.isIndetermined()).toBe(true, 'Node should be in indetermined state');
-    })
-  );
+    expect(childController.isChecked()).toBe(true, 'Node should be checked');
+    expect(controller.isIndetermined()).toBe(true, 'Node should be in indetermined state');
+  }));
 
   it('knows when node is selected', () => {
     const event = jasmine.createSpyObj('e', ['preventDefault']);
@@ -335,7 +333,7 @@ describe('TreeController', () => {
 
     childController.addChild({
       value: 'N',
-      children: [{ value: 'N1' }, { value: 'N2' }]
+      children: [{ value: 'N1' }, { value: 'N2' }],
     });
 
     fixture.detectChanges();
@@ -449,7 +447,7 @@ describe('TreeController', () => {
     const model = { value: 'bla' };
 
     const tree: any = {
-      toTreeModel: jasmine.createSpy('tree.toTreeModel').and.returnValue(model)
+      toTreeModel: jasmine.createSpy('tree.toTreeModel').and.returnValue(model),
     };
 
     const controller = new TreeController({ tree, treeService: null } as any);
